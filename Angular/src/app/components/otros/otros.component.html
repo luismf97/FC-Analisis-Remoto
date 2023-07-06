@@ -1,0 +1,90 @@
+<div class="container" style="margin-top: 10px;">
+  <div class="row">
+      <div class="col-12">
+          <p *ngIf="conectado == 'desconectado'" style="color: red">NodeMCU esta: {{conectado}} </p>
+          <p *ngIf="conectado == 'conectado'" style="color: green">NodeMCU esta: {{conectado}} </p>
+          <div class="col-12">
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal2" style="margin-bottom: 20px;">Configurar</button>
+          </div>
+          <button type="button" class="btn btn-primary" [disabled]="configurado" (click)="iniciar()" style="margin-right: 10px;">Iniciar</button>
+          <button type="button" class="btn btn-danger" (click)="detener()">Detener</button>
+          <div [chart]="chart"></div>
+          <button type="button" [disabled]="dataSocket.length == 0" class="btn btn-success" (click)="download()" style="margin-right: 20px;"> Descargar CSV </button>
+          <button type="button" [disabled]="dataSocket.length == 0" class="btn btn-primary"   data-bs-toggle="modal" data-bs-target="#exampleModal" style="margin-right: 20px;">Guardar en Base de Datos </button>
+
+      </div>
+  </div>
+</div>
+
+<!-- Modal -->
+
+<div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel2" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel2">Configurar Tipo de Registro</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+
+
+        <form [formGroup]="miFormulario" (ngSubmit)="configurar()">
+          <div class="mb-3">
+            <div class="form-group">
+              <input type="range" class="form-control-range" id="datosPaquete" formControlName="datosPorPaquete" min="1" max="100" step="1">
+              <label for="datosPaquete">Datos por Paquete: {{miFormulario.value.datosPorPaquete}}</label>
+            </div>
+            
+            <div class="form-group">
+              <input type="range" class="form-control-range" id="numeroPaquetes" formControlName="numeroPaquetes" min="1" max="100" step="1">
+              <label for="numeroPaquetes">Número de paquetes: {{miFormulario.value.numeroPaquetes}}</label>
+            </div>      
+            
+            <div class="form-group">
+              <input type="range" class="form-control-range" id="frecuencia" formControlName="frecuencia" min="1" max="1000" step="1">
+              <label for="frecuencia">Delay (ms): {{miFormulario.value.frecuencia}} ms</label>
+            </div>
+
+            <label> La inormación llegara cada {{(miFormulario.value.numeroPaquetes * miFormulario.value.datosPorPaquete)/(1000/miFormulario.value.frecuencia) | number:'1.0-2'}} segundos</label>
+
+          </div>
+        </form>
+
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-primary" [disabled]="miFormulario.invalid" (click)="configurar()">Configurar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Guardar registro en sistema</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+
+
+        <form [formGroup]="miFormulario2" (ngSubmit)="guardarData()">
+          <div class="mb-3">
+            <label class="form-label">Nombre del Paciente</label>
+            <select class="form-select" aria-label="Default select example" formControlName="pacienteId">
+              <option *ngFor="let paciente of pacientes" [value]="paciente.Id" >{{paciente.Nombre}}</option>
+            </select>
+          </div>
+        </form>
+
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-primary"     [disabled]="miFormulario.invalid" (click)="guardarData()">Registrar</button>
+      </div>
+    </div>
+  </div>
+</div>

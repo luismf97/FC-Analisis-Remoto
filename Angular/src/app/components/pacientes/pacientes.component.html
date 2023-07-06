@@ -1,0 +1,91 @@
+<div class="container" style="margin-top: 10px;">
+  <div class="row"> 
+    <div class="col">
+      <h5>Pacientes Registrados:</h5>
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Correo</th>
+            <th scope="col">Genero</th>
+            <th scope="col">Nacimiento</th>
+            <th scope="col">Contacto</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let paciente of pacientes">
+            <th>{{paciente.Id}}</th>
+            <td>{{paciente.Nombre}}</td>
+            <td>{{paciente.Correo}}</td>
+            <td>{{paciente.Genero}}</td>
+            <td>{{paciente.Nacimiento | date}}</td>
+            <td>{{paciente.Telefono}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col" *ngIf="tipoRol == 1">
+      <button type="button" class="btn btn-success"   data-bs-toggle="modal" data-bs-target="#exampleModal" style="margin-right: 20px;"> Registrar Paciente </button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Registro de Paciente</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+
+
+        <form [formGroup]="miFormulario" (ngSubmit)="registrar()">
+          <div class="mb-3">
+            <label class="form-label">Nombre del Paciente</label>
+            <input type="text" class="form-control" formControlName="nombre">
+          </div>
+          <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">Correo del Paciente</label>
+            <input type="email" class="form-control" formControlName="correo">
+          </div>
+<!--           <div class="mb-3">
+            <label class="form-label">Genero</label>
+            <input type="text" class="form-control" formControlName="genero">
+          </div> -->
+          <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">Genero</label>
+            <select class="form-select" aria-label="Area" formControlName="genero">
+              <option *ngFor="let item of generos" [ngValue]="item.Id">{{item.Genero}}</option>
+            </select>
+          </div>
+<!--           <div class="mb-3">
+            <label class="form-label">Fecha de Nacimiento</label>
+            <input type="text" class="form-control" formControlName="fecha">
+          </div> -->
+          <div class="mb-3">
+            <label class="form-label">Fecha:</label>
+            <input type="text" class="form-control" id="fecha" name="fecha" formControlName="fecha">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Telefono</label>
+            <input type="text" class="form-control" formControlName="telefono">
+          </div>
+          <div id="emailHelp" class="form-text">*Recuerda revisar que los datos esten correctos</div>
+        </form>
+
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-primary" (click)="registrar()"  [disabled]="miFormulario.invalid">Registrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+

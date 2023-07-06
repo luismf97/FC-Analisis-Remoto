@@ -1,0 +1,22 @@
+<div class="container" style="margin-top: 5px;">
+  <button type="button" (click)='verEcgs()' class="btn btn-primary" style="margin-right: 5px;">Electrocardiogramas</button>
+  <button type="button" (click)='verTemp()' class="btn btn-primary" style="margin-right: 5px;">Temperatura</button>
+  <button type="button" (click)='verOtros()' class="btn btn-primary" style="margin-right: 5px;">Otros Registros</button>
+</div>
+
+<div *ngIf="verEcgsFlag">
+  <app-ecgs></app-ecgs>
+</div>
+
+<div *ngIf="verBpmsFlag">
+  <app-bpms></app-bpms>
+</div>
+
+<div *ngIf="verTempFlag">
+  <app-temperatura></app-temperatura>
+</div>
+
+<div *ngIf="verOtrosFlag">
+  <app-bpms></app-bpms>
+</div>
+

@@ -1,0 +1,28 @@
+<div class="container" style="margin-top: 10px;">
+  <div class="row"> 
+    <div class="col">
+      <h5>Seguimientos de Temperatura guardados en Base de datos</h5>
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Medico</th>
+            <th scope="col">Paciente</th>
+            <th scope="col">Fecha</th>
+            <th scope="col">Descargar</th>
+            <th scope="col">Borrar</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let registro of registros">
+            <th scope="row">{{registro.Id}}</th>
+            <th scope="row">{{registro.Name}}</th>
+            <th scope="row">{{registro.Nombre}}</th>
+            <th scope="row">{{registro.FechaRegistro | date:'dd/MM/yyyy':'GMT'}}</th>
+            <th scope="row"><button type="button" class="btn btn-success" (click)="download(registro.Datos)">Descargar</button></th>
+            <th scope="row"><button type="button" class="btn btn-danger" (click)="borrar(registro.Id)">Borrar</button></th>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>

@@ -1,0 +1,41 @@
+<section class="vh-100" style="background-color: #b6c7e6;">
+  <div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+        <div class="card shadow-2-strong" style="border-radius: 1rem;">
+          <form autocomplete="off" [formGroup]="miFormulario">
+              <div class="card-body p-5 text-center">
+                  <h3 class="mb-5">Registro</h3>
+                  <div class="form-outline mb-4">
+                    <input formControlName="nombre" type="name" id="nombre" class="form-control form-control-lg" />
+                    <label class="form-label">Nombre</label>
+                  </div>
+                  <div class="form-outline mb-4">
+                    <input formControlName="correo" type="email" id="email" class="form-control form-control-lg" />
+                    <label class="form-label">Correo</label>
+                  </div>
+                  <div class="form-outline mb-4">
+                    <select class="form-select" aria-label="Area" formControlName="rol">
+                      <option *ngFor="let item of roles" [ngValue]="item.Id">{{item.Rol}}</option>
+                  </select>
+                    <label class="form-label">Seleccione Rol</label>
+                  </div>  
+                  <div class="form-outline mb-4">
+                    <input formControlName="telefono" type="number" id="telefono-2" class="form-control form-control-lg" />
+                    <label class="form-label">Telefono</label>
+                  </div>
+                  <div class="form-outline mb-4">
+                    <input formControlName="password" type="password" id="typePasswordX-2" class="form-control form-control-lg" />
+                    <label class="form-label">Contraseña</label>
+                  </div>  
+                  <button (click)="submit()" class="btn btn-primary btn-lg btn-block" type="submit" [disabled]="miFormulario.invalid">Registro</button>
+                </div>
+          </form>
+        </div>
+        <div class="text-center">
+          <p>Si ya tiene cuenta, puede entrar en: <a routerLink="/login">Login</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

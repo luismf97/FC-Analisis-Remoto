@@ -1,0 +1,48 @@
+<div class="container" style="margin-top: 10px;">
+  <div class="row">
+      <div class="col-12">
+          <p *ngIf="conectado == 'desconectado'" style="color: red">NodeMCU esta: {{conectado}} </p>
+          <p *ngIf="conectado == 'conectado'" style="color: green">NodeMCU esta: {{conectado}} </p>
+          <button *ngIf="tipoRol == 1" type="button" class="btn btn-primary" (click)="iniciar()" style="margin-right: 10px;">Iniciar</button>
+          <button *ngIf="tipoRol == 1" type="button" class="btn btn-danger" (click)="detener()">Detener</button>
+          <div [chart]="chart"></div>
+          <button type="button" [disabled]="dataSocket.length == 0" class="btn btn-success" (click)="download()" style="margin-right: 20px;"> Descargar CSV </button>
+          <button type="button" [disabled]="dataSocket.length == 0" class="btn btn-primary"   data-bs-toggle="modal" data-bs-target="#exampleModal" style="margin-right: 20px;">Guardar en Base de Datos </button>
+
+      </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Guardar registro en sistema</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+
+
+        <form [formGroup]="miFormulario" (ngSubmit)="guardarData()">
+          <div class="mb-3">
+            <label class="form-label">Nombre del Paciente</label>
+            <select class="form-select" aria-label="Default select example" formControlName="pacienteId">
+              <option *ngFor="let paciente of pacientes" [value]="paciente.Id" >{{paciente.Nombre}}</option>
+            </select>
+          </div>
+        </form>
+
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-primary"     [disabled]="miFormulario.invalid" (click)="guardarData()">Registrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
